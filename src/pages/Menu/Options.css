@@ -1,0 +1,27 @@
+
+.category-buttons {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ccc;
+}
+
+.card-grid {
+  margin-top: 16px;
+}
+
+.product-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-title {
+  font-weight: bold;
+}
+.product-card{
+  width: 200px;
+  height: 350px;
+}

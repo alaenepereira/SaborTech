@@ -1,0 +1,61 @@
+
+body, html {
+  margin: 0;
+  padding: 0;
+
+
+}
+
+
+
+.navbar-custom {
+  background-color: #d35400; 
+  width: 100vw;
+
+   display: grid;
+   font-size: 18px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+  font-size: 35px;
+  margin-top: 20px;
+  margin-right: 1600px;
+  color: rgba(57, 16, 238, 0.952);
+  list-style: none;
+  display: inline-block;
+  text-decoration: none;
+}
+.navbar-custom .navbar-nav .nav-link {
+  padding: 0 15px;
+}
+
+
+.navbar-toggler {
+  display: none;
+  color: #ffffff;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: none;
+}
+
+.ms-auto{
+  margin-left: 1000px;
+}
+
+.navbar-nav .nav-link {
+  font-weight: bold;
+  color: #ffffff88;
+  
+
+}
+
+.navbar-nav .nav-link:hover {
+  color: #000000;
+  transform: scale(1.05);
+  transition: 0.5s;
+}
