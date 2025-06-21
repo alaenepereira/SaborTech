@@ -6,11 +6,15 @@
 
 .card-grid {
   margin-top: 16px;
+ 
+  
 }
 
 .product-card {
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
+   width: 200px;
+  height: 480px;
 }
 
 .product-card:hover {
@@ -20,8 +24,8 @@
 
 .product-title {
   font-weight: bold;
+
 }
-.product-card{
-  width: 200px;
-  height: 350px;
-}
+
+
+

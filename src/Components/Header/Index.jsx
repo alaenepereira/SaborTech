@@ -22,12 +22,10 @@ export default function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggle} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/" onClick={onHandleMenuAction}>Início</Nav.Link>
-            <Nav.Link as={Link} to="/sobre" onClick={onHandleMenuAction}>Sobre Nós</Nav.Link>
-            <Nav.Link as={Link} to="/menu" onClick={onHandleMenuAction}>Menu</Nav.Link>
-            <Nav.Link as={Link} to="/pedidos" onClick={onHandleMenuAction}>Pedidos</Nav.Link>
-            <Nav.Link as={Link} to="/historia" onClick={onHandleMenuAction}>História</Nav.Link>
-            <Nav.Link as={Link} to="/contato" onClick={onHandleMenuAction}>Contato</Nav.Link>
+            <Nav.Link as={Link} to="/" onClick={onHandleMenuAction}>Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/cardápio" onClick={onHandleMenuAction}>Menu</Nav.Link>
+            <Nav.Link as={Link} to="/add" onClick={onHandleMenuAction}>Adicionar ao cardápio</Nav.Link>
+            <Nav.Link as={Link} to="/estoque" onClick={onHandleMenuAction}>Controle de estoque</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

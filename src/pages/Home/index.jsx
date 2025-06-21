@@ -11,8 +11,8 @@ export default function Home() {
       <Header />
       <section className="hero">
         <div className="hero-content">
-          <h2>Transformando pedidos em experiências digitais</h2>
-          <p>Seu cardápio, nossa tecnologia: experiências que dão água na boca.</p>
+          <h2>O sabor da eficiência começa aqui:</h2>
+          <p>controle seus pedidos com facilidade.</p>
         </div>
       </section>
     </>
