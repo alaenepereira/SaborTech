@@ -11,8 +11,8 @@ export default function Home() {
       <Header />
       <section className="hero">
         <div className="hero-content">
-          <h2>O sabor da eficiência começa aqui:</h2>
-          <p>controle seus pedidos com facilidade.</p>
+          <h2>O sabor da eficiência começa aqui: controle seus pedidos com facilidade.</h2>
+          <p>SaborTech conectando sabores à tecnologia.</p>
         </div>
       </section>
     </>
