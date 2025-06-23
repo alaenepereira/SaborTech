@@ -1,0 +1,24 @@
+.footer{
+  background-color: #d35400;
+ text-align: center;
+  padding: 5px 0;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.footer p{
+  margin: 5px 0;
+  font-size: 1rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #fff;
+}
+
+@media (max-width: 768px){
+  .footer{
+    padding: 15px 0;
+  }
+  .footer p{
+    font-size: 0.9rem;
+  }
+}

@@ -2,6 +2,7 @@
 import { Container } from "react-bootstrap";
 import './home.css'
 import Header from "../../Components/Header/Index";
+import Copyright from "../../Components/Footer";
 
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
           <p>SaborTech conectando sabores à tecnologia.</p>
         </div>
       </section>
+      <Copyright />
     </>
   );
 };

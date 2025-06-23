@@ -12,10 +12,12 @@ import {
   CardMedia,
   CardActions
 } from '@mui/material';
-import { Modal } from '@mui/material'
+
+import { Container, Row, Col } from "react-bootstrap";
 
 import './Options.css';
 import Header from '../../Components/Header/Index';
+
 
 
 
@@ -105,7 +107,10 @@ function Menu() {
     }
 
     return (
+
+
       <Grid container spacing={2} className="card-grid">
+
         {items.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.id}>
             <Card className="product-card">
@@ -146,6 +151,7 @@ function Menu() {
         ))
         }
       </Grid>
+
     );
   };
 
@@ -209,5 +215,6 @@ function Menu() {
     </>
   );
 }
+<footer />
 
 export default Menu;
