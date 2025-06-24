@@ -3,31 +3,33 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./style.css";
 
+
 export default function Header() {
 
-  const [expanded, setExpanded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleToggle = () => {
-    setExpanded(expanded ? false : "expanded");
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
-  const onHandleMenuAction = () => {
-
-    setExpanded(false);
-  };
   return (
-    <Navbar expand="lg" variant="dark" sticky="top" className="navbar-custom" expanded={expanded}>
+    <Navbar expand="lg" data-bs-theme="dark" sticky="top" className="navbar-custom">
       <Container fluid className="header">
-        <Navbar.Brand as={Link} to="/" onClick={onHandleMenuAction}>SaborTech </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggle} />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Brand as={Link} to="/" >SaborTech </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+        <div className={`Header ${menuOpen ? 'active' : ''}`}></div>
+        <Navbar.Collapse id="basic-navbar-nav" in={menuOpen}>
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/" onClick={onHandleMenuAction}>Dashboard</Nav.Link>
-            <Nav.Link as={Link} to="/cardápio" onClick={onHandleMenuAction}>Menu</Nav.Link>
-            <Nav.Link as={Link} to="/add" onClick={onHandleMenuAction}>Adicionar ao cardápio</Nav.Link>
-            <Nav.Link as={Link} to="/estoque" onClick={onHandleMenuAction}>Controle de estoque</Nav.Link>
+            <Nav.Link as={Link} to="/" >Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/cardápio">Menu</Nav.Link>
+            <Nav.Link as={Link} to="/add" >Adicionar ao cardápio</Nav.Link>
+            <Nav.Link as={Link} to="/estoque" >Controle de estoque</Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <button className="menu-icon" onClick={toggleMenu} >
+          {menuOpen ? 'X' : '☰'}
+        </button>
       </Container>
     </Navbar>
   );

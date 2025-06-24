@@ -13,6 +13,9 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: #fff;
 }
+.footer Link{
+   color: #fff;
+}
 
 @media (max-width: 768px){
   .footer{

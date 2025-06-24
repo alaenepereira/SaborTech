@@ -59,3 +59,30 @@ body, html {
   transform: scale(1.05);
   transition: 0.5s;
 }
+.menu-icon{
+  position: fixed;
+  display: inline-block;
+  top: 1rem;
+  right: 1rem;
+  background:none;
+  border: 'none';
+  font-Size: '1.5rem';
+   margin-Left: '1rem';
+   display: none;
+ 
+  
+  
+  
+}
+@media (max-width: 768px) {
+  .header{
+    display: none;
+    
+  }
+  .menu-icon {
+    display: flex; 
+     
+  }
+
+ 
+}

@@ -1,6 +1,4 @@
-.menu-container{
-  background-color: #2c2c2c;
-}
+
 .category-buttons {
   background-color: #f5f5f5;
   border-bottom: 1px solid #ccc;
@@ -8,11 +6,14 @@
 
 .card-grid {
   
-  display: flex;
+   width: 100%;
+  margin: 0 auto;
+  padding: 0 8px; 
+  box-sizing: border-box;
   flex-wrap: wrap;
-  justify-content: flex-start;
   gap: 16px;
-  margin-top: 16px;
+  justify-content: flex-start;
+  overflow: hidden;
 }
 
  
@@ -22,8 +23,20 @@
 .product-card {
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
-   width: 200px;
-  height: 480px;
+   display: flex;
+  height: auto;
+   background-color: #2c2c2c;
+   color: #f5f5f5;
+   padding: 10px;
+   width: 100%;
+   max-width: 100%;
+   flex-direction: column;
+   margin: 0 auto;
+   border-radius: 15px;
+   box-sizing: border-box;
+   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+
+  
 }
 
 .product-card:hover {
@@ -35,6 +48,41 @@
   font-weight: bold;
 
 }
+.menu-content {
+  background-color: #2c2c2c;
+}
+
+.category-buttons {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+    overflow-x: auto;       
+  white-space: nowrap;
+}
+
+.category-buttons .MuiButton-root {
+  margin-right: 8px;     
+}
+@media (min-width: 768px) {
+  .category-buttons {
+    display: flex;
+    flex-wrap: wrap;      
+    overflow-x: visible;  
+    white-space: normal;
+  }
+
+  .category-buttons .MuiButton-root {
+    margin-bottom: 8px;   
+  }
+}
+
+@media (min-width: 600px) {
+  .card-grid {
+      padding: 0 4px;
+    gap: 8px;
+  }
+}
+
 
 
 

@@ -121,7 +121,7 @@ function Menu() {
                 image={item.image}
                 alt={item.name}
               />
-              <CardContent>
+              <CardContent >
                 <Typography variant="h6" className="product-title">{item.name}</Typography>
                 <Typography variant="body2" color="text.secondary">
                   {Array.isArray(item.description)
