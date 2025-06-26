@@ -14,7 +14,7 @@ body, html {
 
    display: grid;
    font-size: 18px;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.);
 }
 
 .navbar-brand {
@@ -43,9 +43,7 @@ body, html {
   background-image: none;
 }
 
-.ms-auto{
-  margin-left: 1000px;
-}
+
 
 .navbar-nav .nav-link {
   font-weight: bold;

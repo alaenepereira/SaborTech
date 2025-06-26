@@ -21,7 +21,7 @@ export default function Header() {
         <div className={`Header ${menuOpen ? 'active' : ''}`}></div>
         <Navbar.Collapse id="basic-navbar-nav" in={menuOpen}>
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/" >Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/" >Inicio</Nav.Link>
             <Nav.Link as={Link} to="/cardápio">Menu</Nav.Link>
             <Nav.Link as={Link} to="/add" >Adicionar ao cardápio</Nav.Link>
             <Nav.Link as={Link} to="/estoque" >Controle de estoque</Nav.Link>
