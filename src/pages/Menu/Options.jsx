@@ -53,7 +53,7 @@ function Menu() {
   const renderCategoryContent = () => {
     let items = [];
 
-    // Primeiro carrega os itens padrão do JSON
+    // Primeiro carregar os itens padrão do JSON
     switch (activeCategory) {
       case 'coffees':
         items = [...coffeesList];

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Importar useNavigate de react-router-dom
 import "./CadastrarProduto.css";
 
-// Altere o objeto de categorias para usar os mesmos valores do Menu
+// Alterar o objeto de categorias para usar os mesmos valores do Menu
 const categories = [
   { value: 'coffees', label: 'Cafés' },
   { value: 'salads', label: 'Saladas' },
@@ -67,13 +67,13 @@ export default function CadastrarProduto() {
   const novoProduto = {
     id: Date.now(),
     ...formData,
-    // Adicione estes campos para compatibilidade com o Menu
+    // campos para compatibilidade com o Menu
     name: formData.nome,
     price: parseFloat(formData.preco),
     description: formData.descricao,
     stockQuantity: parseInt(formData.estoque) || 0,
     image: formData.imagem,
-    // Mantenha os campos originais também
+    // campos 
     preco: parseFloat(formData.preco),
     estoque: parseInt(formData.estoque) || 0
   };
@@ -94,7 +94,7 @@ export default function CadastrarProduto() {
       [field]: value
     }));
 
-    // Clear error when user starts typing
+    // Clear error 
     if (errors[field]) {
       setErrors(prev => ({
         ...prev,

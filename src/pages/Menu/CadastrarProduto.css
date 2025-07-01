@@ -12,7 +12,7 @@
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
-/* CARD DO FORMULÁRIO (AGORA SEM LIMITES) */
+/* CARD DO FORMULÁRIO  */
 .cadastro-card {
   width: 100%;
   min-height: 100vh;
@@ -29,7 +29,7 @@
   text-align: center;
 }
 
-/* CONTEÚDO (OCUPE TODO O ESPAÇO) */
+/* CONTEÚDO  */
 .cadastro-content {
   padding: 2rem;
   width: 100%;
@@ -43,7 +43,7 @@
   width: 100%;
 }
 
-/* (MANTENHA SEUS OUTROS ESTILOS AQUI) */
+/* OUTROS ESTILOS AQUI */
 
 .form-group {
   display: flex;
