@@ -2,7 +2,7 @@
 .category-buttons {
   background-color: #f5f5f5;
   border-bottom: 1px solid #ccc;
-    padding: 8px;
+  padding: 8px;
   overflow-x: auto;
   white-space: nowrap;
   display: flex;
@@ -30,8 +30,6 @@
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
    display: flex;
-  
-  
    color: #f5f5f5;
    padding: 10px;
    width: 100%;
@@ -40,14 +38,14 @@
    margin: 0 auto;
    border-radius: 15px;
    box-sizing: border-box;
-   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.8);
 
   
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
 }
 
 .product-title {
@@ -65,7 +63,7 @@
 }
 @media (min-width: 600px) {
   .category-buttons {
-    display: flex;
+    display: grid;
     flex-wrap: wrap;      
     overflow-x: visible;  
     white-space: normal;
@@ -73,16 +71,14 @@
     flex-direction: column;
   }
 
-  .category-buttons .MuiButton-root {
-    margin-bottom: 8px;   
-  }
+ 
  
 }
 
 @media (min-width: 748px){
   .product-card{
     flex-direction: column;
-    min-width: 50%;
+    min-width: 100%;
   }
   
    .card-grid {
