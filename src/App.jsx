@@ -13,6 +13,7 @@ function App() {
   <Route path="/" element={<Home />} />
   <Route path="/cardapio" element={<Menu />} />  // Options.jsx
   <Route path="/add" element={<CadastrarProduto />} />
+  <Route path="/editar/:id" element={<EditarProdutos />} />
   {/* outras rotas */}
 </Routes>
       <footer />
