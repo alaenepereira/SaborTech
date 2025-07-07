@@ -1,4 +1,3 @@
-// Menu.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -66,14 +65,18 @@ function Menu() {
       <Grid container spacing={2} className="card-grid">
 
         {items.map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item.id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
             <Card sx={{
-              maxWidth: isSmallScreen ? '100%' : '345px',
-              m: 1,
-            }} className="product-card">
-              <CardMedia
+              maxWidth: 345,
+              width: '100%',
+              m: 'auto',
+            }} className='product-card' >
+              <CardMedia className='product-card'
                 component="img"
-                height='200vh'
+                sx={{
+                  height: isSmallScreen ? 180 : 200,
+                  objectFit: 'cover'
+                }}
 
                 image={item.image}
                 alt={item.name}
@@ -91,7 +94,7 @@ function Menu() {
                     : item.description}
                 </Typography>
               </CardContent>
-              <CardContent className='price'>
+              <CardContent>
 
                 <Typography variant='subtitle1' color='text.primary' fontWeight={'bold'} >
                   {item.stockQuantity}
@@ -117,8 +120,8 @@ function Menu() {
   return (
     <>
       <Header />
-      <Box sx={{ padding: 2 }} className="category-buttons">
-        <Stack direction="row" spacing={2}>
+      <Box sx={{ padding: 2 }} >
+        <Stack direction="row" spacing={1} className="category-buttons">
           <Button
             variant={activeCategory === 'coffees' ? 'contained' : 'outlined'}
             onClick={() => setActiveCategory('coffees')}
@@ -165,7 +168,7 @@ function Menu() {
         </Stack>
       </Box>
 
-      <Box sx={{ padding: 4 }}>
+      <Box sx={{ padding: 2 }}>
         {renderCategoryContent()}
       </Box>
 
