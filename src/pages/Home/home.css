@@ -1,0 +1,84 @@
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('/src/assets/img_fundo.png') no-repeat;
+  background-size: cover; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  margin: 0;
+ overflow: hidden;
+  height: 100vh;
+  max-width: 100vw;
+ 
+}
+
+.hero::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.06);
+  z-index: 1;
+}
+
+.hero-content{
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+ 
+  .hero-content h2 {
+  font-size: 3rem;
+  font-family: 'Brush Script MT', cursive;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.4rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+@media (max-width: 1024px) {
+  .hero-content h2 {
+    font-size: 2.5rem;
+  }
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero{
+    height: 100vh ;
+    padding: 20px 0;
+  }
+  .hero-content{
+    padding: 0 15px;
+  }
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+  .hero-content p{
+    font-size: 1rem;
+  }
+  
+
+ 
+}
+@media (max-width: 480px) {
+  .hero-content h2 {
+    font-size: 1.5rem;
+  }
+  .hero-content p {
+    font-size: 0.9rem;
+  }
+  .hero-content {
+    padding: 0 10px;
+  }
+}
