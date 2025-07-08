@@ -66,6 +66,10 @@
   margin-right: 8px;
   flex-shrink: 0;     
 }
+
+.icons{
+  background: red;
+}
 @media (min-width: 600px) {
   .category-buttons {
     flex-direction: column;

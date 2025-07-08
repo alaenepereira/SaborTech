@@ -9,11 +9,17 @@ import {
   Card,
   CardContent,
   CardMedia,
-  useMediaQuery
+  useMediaQuery,
+  CardActions,
+  IconButton,
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import './Options.css';
 import Header from '../../Components/Header/Index';
 import { coffeesList, dessertsList, drinksList, extraSideDishes, mainDishes, massLists, saladsList } from '../../Services/Json';
+
+
 
 
 
@@ -28,7 +34,7 @@ function Menu() {
   const [activeCategory, setActiveCategory] = useState('coffees');
 
 
-  const renderCategoryContent = () => {
+  const renderCategoryContent = (onEdit, onDelete) => {
     let items = []
 
     switch (activeCategory) {
@@ -102,10 +108,17 @@ function Menu() {
 
                 <Typography variant="body2" color="blue" >
                   {item.price}
-
                 </Typography>
-
               </CardContent>
+
+              <CardActions disableSpacing>
+                <IconButton aria-label="editar" onClick={onEdit}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton className='icons' aria-label="excluir" onClick={onDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              </CardActions>
             </Card>
           </Grid>
         ))
