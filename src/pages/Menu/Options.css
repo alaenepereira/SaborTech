@@ -22,10 +22,6 @@
   overflow: hidden;
 }
 
- 
-  
-
-
 .product-card {
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
@@ -39,8 +35,6 @@
    border-radius: 15px;
    box-sizing: border-box;
    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.8);
-
-  
 }
 
 .product-card:hover {
