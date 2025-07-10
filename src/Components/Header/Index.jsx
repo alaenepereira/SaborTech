@@ -22,7 +22,7 @@ export default function Header() {
         <Navbar.Collapse id="basic-navbar-nav" in={menuOpen}>
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/" >Inicio</Nav.Link>
-            <Nav.Link as={Link} to="/cardápio">Menu</Nav.Link>
+            <Nav.Link as={Link} to="/cardapio">Menu</Nav.Link>
             <Nav.Link as={Link} to="/add" >Adicionar ao cardápio</Nav.Link>
             <Nav.Link as={Link} to="/editar" >Controle de estoque</Nav.Link>
           </Nav>

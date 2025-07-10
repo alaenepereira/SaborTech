@@ -12,7 +12,8 @@ export default function Copyright() {
         color: 'text.secondary',
       }}
     >
-      <p> Copyright © </p>
+      {/* Removida a tag <p> interna */}
+      Copyright © {' '}
       <Link color="inherit" href="https://atlanticoavanti.ensinio.com/g/capacita-logica-de-programacao-c2/about">
         SaborTech
       </Link>{' '}

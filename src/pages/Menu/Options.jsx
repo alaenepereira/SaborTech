@@ -24,50 +24,106 @@ import { coffeesList, dessertsList, drinksList, extraSideDishes, mainDishes, mas
 
 
 function Menu() {
-
-
   const isSmallScreen = useMediaQuery('(max-width:600px)');
-
-
-
-
   const [activeCategory, setActiveCategory] = useState('coffees');
+  const [produtosSalvos, setProdutosSalvos] = useState([]);
 
+  useEffect(() => {
+    const carregarProdutos = () => {
+      const salvos = JSON.parse(localStorage.getItem('produtos')) || [];
+      setProdutosSalvos(salvos);
+    };
+    carregarProdutos();
+    window.addEventListener('storage', carregarProdutos);
+    return () => window.removeEventListener('storage', carregarProdutos);
+  }, []);
+
+  useEffect(() => {
+    console.log('Produtos salvos:', produtosSalvos);
+    console.log('Categoria ativa:', activeCategory);
+    
+    const produtosFiltrados = produtosSalvos.filter(produto => {
+      const categoriaProduto = produto.categoria?.toLowerCase() || '';
+      const categoriaAtiva = activeCategory.toLowerCase();
+      
+      return (
+        categoriaProduto === categoriaAtiva ||
+        categoriaProduto.replace(/-/g, ' ') === categoriaAtiva ||
+        (categoriaAtiva === 'dishes' && categoriaProduto.includes('pratos')) ||
+        (categoriaAtiva === 'mass' && categoriaProduto.includes('massas')) ||
+        (categoriaAtiva === 'extras' && categoriaProduto.includes('acompanhamentos'))
+      );
+    });
+    
+    console.log('Produtos filtrados:', produtosFiltrados);
+  }, [activeCategory, produtosSalvos]);
 
   const renderCategoryContent = (onEdit, onDelete) => {
     let items = []
 
+    // Primeiro carregar os itens padrão do JSON
     switch (activeCategory) {
       case 'coffees':
-        items = coffeesList
+        items = [...coffeesList];
         break;
       case 'salads':
-        items = saladsList
-        break
+        items = [...saladsList];
+        break;
       case 'dishes':
-        items = mainDishes
-        break
+        items = [...mainDishes];
+        break;
       case 'desserts':
-        items = dessertsList
-        break
+        items = [...dessertsList];
+        break;
       case 'mass':
-        items = massLists
-        break
+        items = [...massLists];
+        break;
       case 'extras':
-        items = extraSideDishes
-        break
+        items = [...extraSideDishes];
+        break;
       case 'drinks':
-        items = drinksList
-        break
-
-
+        items = [...drinksList];
+        break;
       default:
         break;
     }
 
+    // Filtra produtos salvos por categoria com mais opções de compatibilidade
+    const produtosDaCategoria = produtosSalvos.filter(produto => {
+      const categoriaProduto = produto.categoria?.toLowerCase() || '';
+      const categoriaAtiva = activeCategory.toLowerCase();
+      
+      return (
+        categoriaProduto === categoriaAtiva ||
+        categoriaProduto.replace(/-/g, ' ') === categoriaAtiva ||
+        (categoriaAtiva === 'dishes' && categoriaProduto.includes('pratos')) ||
+        (categoriaAtiva === 'mass' && categoriaProduto.includes('massas')) ||
+        (categoriaAtiva === 'extras' && categoriaProduto.includes('acompanhamentos'))
+      );
+    });
+
+    // Converte os produtos salvos para o formato esperado
+    const produtosConvertidos = produtosDaCategoria.map(produto => {
+      const price = typeof produto.preco === 'number' ? 
+                   produto.preco : 
+                   Number(produto.preco || produto.price || 0);
+      
+      return {
+        id: produto.id || Date.now(),
+        image: produto.imagem || produto.image || '',
+        name: produto.nome || produto.name || 'Produto sem nome',
+        description: produto.descricao || produto.description || 'Sem descrição',
+        price: isNaN(price) ? 0 : price, // Garante que é sempre um número válido
+        stockQuantity: typeof produto.estoque === 'number' ? 
+                      produto.estoque : 
+                      Number(produto.estoque || produto.stockQuantity || 0)
+      };
+    });
+
+    // Combina todos os produtos
+    const todosProdutos = [...items, ...produtosConvertidos];
+
     return (
-
-
       <Grid container spacing={2} className="card-grid">
 
         {items.map((item) => (
@@ -124,11 +180,8 @@ function Menu() {
         ))
         }
       </Grid>
-
     );
   };
-
-
 
   return (
     <>
@@ -184,16 +237,8 @@ function Menu() {
       <Box sx={{ padding: 2 }}>
         {renderCategoryContent()}
       </Box>
-
     </>
-
   );
-
 }
-
-
-
-
-
 
 export default Menu;
