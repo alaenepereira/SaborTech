@@ -49,6 +49,46 @@ body, html {
   font-weight: bold;
   color: #ffffff88;
   
+  
+
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: #333333;
+  color: #ffffff ;
+  border-radius: 10px;
+  transform: scale(1.05);
+  transition: 0.5s;
+}
+.menu-icon{
+ position: fixed;
+  top: 0.5rem;
+  right: 0.8rem;
+  background:none;
+  border: none;
+  font-Size: 1.5rem;
+  display: none;
+   
+  
+}
+@media (max-width: 768px) {
+  .ms-auto{
+    margin-left: 20rem;
+  }
+  .header{
+    display: none;
+  
+    
+  }
+  .menu-icon {
+    display: flex; 
+    
+     
+  }
+  .navbar-nav .nav-link {
+  font-weight: bold;
+  color: #ffffff88;
+  
 
 }
 
@@ -57,30 +97,6 @@ body, html {
   transform: scale(1.05);
   transition: 0.5s;
 }
-.menu-icon{
-  position: fixed;
-  display: inline-block;
-  top: 1rem;
-  right: 1rem;
-  background:none;
-  border: 'none';
-  font-Size: '1.5rem';
-   margin-Left: '1rem';
-   display: none;
- 
-  
-  
-  
-}
-@media (max-width: 768px) {
-  .header{
-    display: none;
-    
-  }
-  .menu-icon {
-    display: flex; 
-     
-  }
 
  
 }

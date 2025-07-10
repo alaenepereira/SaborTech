@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -9,11 +9,19 @@ import {
   Card,
   CardContent,
   CardMedia,
-  useMediaQuery
+  useMediaQuery,
+  CardActions,
+  IconButton,
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import './Options.css';
 import Header from '../../Components/Header/Index';
 import { coffeesList, dessertsList, drinksList, extraSideDishes, mainDishes, massLists, saladsList } from '../../Services/Json';
+
+
+
+
 
 function Menu() {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -50,8 +58,8 @@ function Menu() {
     console.log('Produtos filtrados:', produtosFiltrados);
   }, [activeCategory, produtosSalvos]);
 
-  const renderCategoryContent = () => {
-    let items = [];
+  const renderCategoryContent = (onEdit, onDelete) => {
+    let items = []
 
     // Primeiro carregar os itens padrão do JSON
     switch (activeCategory) {
@@ -117,50 +125,60 @@ function Menu() {
 
     return (
       <Grid container spacing={2} className="card-grid">
-        {todosProdutos.map((item) => {
-          // Verificação adicional para debug
-          console.log('Renderizando produto:', {
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            priceType: typeof item.price
-          });
-          
-          return (
-            <Grid item xs={12} sm={6} md={4} key={item.id}>
-              <Card sx={{ 
-                maxWidth: isSmallScreen ? '100%' : '345px', 
-                m: 1 
-              }} className="product-card">
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={item.image}
-                  alt={item.name}
-                  style={{ objectFit: 'cover' }}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div" className="product-title">
-                    {item.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {item.description}
-                  </Typography>
-                </CardContent>
-                <CardContent className="price">
-                  <Typography variant="subtitle1" color="text.primary" fontWeight="bold">
-                    Estoque: {item.stockQuantity}
-                  </Typography>
-                  <Typography variant="body2" color="blue">
-                    Preço: R$ {typeof item.price === 'number' && !isNaN(item.price) ? 
-                             item.price.toFixed(2) : 
-                             '0.00'}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          );
-        })}
+
+        {items.map((item) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+            <Card sx={{
+              maxWidth: 345,
+              width: '100%',
+              m: 'auto',
+            }} className='product-card' >
+              <CardMedia className='product-card'
+                component="img"
+                sx={{
+                  height: isSmallScreen ? 180 : 200,
+                  objectFit: 'cover'
+                }}
+
+                image={item.image}
+                alt={item.name}
+              />
+              <CardContent >
+                <Typography variant="h6" component='div' className="product-title">{item.name} </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {Array.isArray(item.description)
+                    ? item.description.map((line, idx) => (
+                      <React.Fragment key={idx}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    ))
+                    : item.description}
+                </Typography>
+              </CardContent>
+              <CardContent>
+
+                <Typography variant='subtitle1' color='text.primary' fontWeight={'bold'} >
+                  {item.stockQuantity}
+                </Typography> <br />
+
+                <Typography variant="body2" color="blue" >
+                  {item.price}
+                </Typography>
+              </CardContent>
+
+              <CardActions disableSpacing>
+                <IconButton aria-label="editar" onClick={onEdit}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton className='icons' aria-label="excluir" onClick={onDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))
+        }
       </Grid>
     );
   };
@@ -168,30 +186,55 @@ function Menu() {
   return (
     <>
       <Header />
-      <Box sx={{ padding: 2 }} className="category-buttons">
-        <Stack direction="row" spacing={2} sx={{ overflowX: 'auto', py: 1 }}>
-          {[
-            { value: 'coffees', label: 'Cafés' },
-            { value: 'salads', label: 'Saladas' },
-            { value: 'dishes', label: 'Pratos Principais' },
-            { value: 'mass', label: 'Massas' },
-            { value: 'extras', label: 'Acompanhamentos' },
-            { value: 'desserts', label: 'Sobremesas' },
-            { value: 'drinks', label: 'Bebidas' }
-          ].map((category) => (
-            <Button
-              key={category.value}
-              variant={activeCategory === category.value ? 'contained' : 'outlined'}
-              onClick={() => setActiveCategory(category.value)}
-              sx={{ minWidth: 'max-content' }}
-            >
-              {category.label}
-            </Button>
-          ))}
+      <Box sx={{ padding: 2 }} >
+        <Stack direction="row" spacing={1} className="category-buttons">
+          <Button
+            variant={activeCategory === 'coffees' ? 'contained' : 'outlined'}
+            onClick={() => setActiveCategory('coffees')}
+          >
+            Cafés
+          </Button>
+          <Button
+            variant={activeCategory === 'salads' ? 'contained' : 'outlined'}
+            onClick={() => setActiveCategory('salads')}
+          >
+            Saladas
+          </Button>
+
+          <Button
+            variant={activeCategory === 'dishes' ? 'contained' : 'outlined'}
+            onClick={() => setActiveCategory('dishes')}
+          >
+            Pratos Principais
+          </Button>
+          <Button
+            variant={activeCategory === 'mass' ? 'contained' : 'outlined'}
+            onClick={() => setActiveCategory('mass')}
+          >
+            Massas
+          </Button>
+          <Button
+            variant={activeCategory === 'extras' ? 'contained' : 'outlined'}
+            onClick={() => setActiveCategory('extras')}
+          >
+            Acompanhamentos Extras
+          </Button>
+          <Button
+            variant={activeCategory === 'desserts' ? 'contained' : 'outlined'}
+            onClick={() => setActiveCategory('desserts')}
+          >
+            Sobremesas
+          </Button>
+          <Button
+            variant={activeCategory === 'drinks' ? 'contained' : 'outlined'}
+            onClick={() => setActiveCategory('drinks')}
+          >
+            Bebidas
+          </Button>
         </Stack>
       </Box>
 
-      <Box sx={{ padding: 4 }}>
+      <Box sx={{ padding: 2 }}>
         {renderCategoryContent()}
       </Box>
     </>

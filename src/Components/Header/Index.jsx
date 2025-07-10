@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./style.css";
@@ -24,7 +24,7 @@ export default function Header() {
             <Nav.Link as={Link} to="/" >Inicio</Nav.Link>
             <Nav.Link as={Link} to="/cardapio">Menu</Nav.Link>
             <Nav.Link as={Link} to="/add" >Adicionar ao cardápio</Nav.Link>
-            <Nav.Link as={Link} to="/estoque" >Controle de estoque</Nav.Link>
+            <Nav.Link as={Link} to="/editar" >Controle de estoque</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <button className="menu-icon" onClick={toggleMenu} >

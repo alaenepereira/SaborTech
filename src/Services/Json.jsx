@@ -24,7 +24,7 @@ export const mainDishes = [
 
 export const massLists = [
   { id: 1, name: ' 🍽️ Espaguete à Bolonhesa', description: 'Massa al dente com molho de carne moída ao molho de tomate caseiro.', price: 'R$ 26,00', stockQuantity: 'Quantidade disponíveis: 2', image: 'src/assets/espaguete.jpg' },
-  { id: 1, name: '🍽️ Penne ao Molho Branco com Frango', description: 'Penne ao molho cremoso com tiras de frango grelhado e champignon', price: 'R$ 64,00', stockQuantity: 'Quantidade disponíveis: 6', image: 'src/assets/molho-branco.jpg' },
+  { id: 2, name: '🍽️ Penne ao Molho Branco com Frango', description: 'Penne ao molho cremoso com tiras de frango grelhado e champignon', price: 'R$ 64,00', stockQuantity: 'Quantidade disponíveis: 6', image: 'src/assets/molho-branco.jpg' },
 ]
 
 export const extraSideDishes = [
@@ -43,10 +43,11 @@ export const dessertsList = [
 ];
 
 export const drinksList = [
-  { id: 1, name: ' 🍹 Sucos naturais ', description: 'laranja, abacaxi, maracujá', price: 'R$ 4,00', stockQuantity: 'Quantidade disponíveis: 13', image: 'src/assets/sucos.jpg' },
+  { id: 1, name: ' 🍹 Sucos naturais ', description: 'laranja, abacaxi, maracujá', price: 'R$ 4,00', stockQuantity: 'Quantidade disponíveis: 13', image: 'src/assets/suco.jpg' },
   { id: 2, name: 'Refrigerantes', price: 'R$ 11,00', stockQuantity: 'Quantidade disponíveis: 15', image: 'src/assets/refri.jpg' },
-  { id: 2, name: 'Água mineral', price: 'R$ 2,00', stockQuantity: 'Quantidade disponíveis: 30', image: 'src/assets/agua.jpg' },
-  { id: 2, name: ' 🍺 Cervejas', stockQuantity: 'Quantidade disponíveis: 50', price: 'R$ 6,00', image: 'src/assets/cerveja.jpg' },
+  { id: 3, name: 'Água mineral', price: 'R$ 2,00', stockQuantity: 'Quantidade disponíveis: 30', image: 'src/assets/agua.jpg' },
+  { id: 4, name: ' 🍺 Cervejas', stockQuantity: 'Quantidade disponíveis: 50', price: 'R$ 6,00', image: 'src/assets/cerveja.jpg' },
+  { id: 5, name: ' 🍺 Vinhos', stockQuantity: 'Quantidade disponíveis: 30', price: 'R$ 45,00', image: 'src/assets/vinho.jpg' }
 ]
 
 
