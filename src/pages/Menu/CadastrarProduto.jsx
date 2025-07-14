@@ -1,21 +1,19 @@
 import { useState } from "react";
-// REMOVER -> import { useLocation } from "wouter";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate de react-router-dom
+import { useNavigate } from "react-router-dom";
 import "./CadastrarProduto.css";
 
-// Alterar o objeto de categorias para usar os mesmos valores do Menu
 const categories = [
   { value: 'coffees', label: 'Cafés' },
   { value: 'salads', label: 'Saladas' },
-  { value: 'dishes', label: 'Pratos Principais' }, // Mudado de 'pratos-principais' para 'dishes'
-  { value: 'mass', label: 'Massas' }, // Mudado de 'massas' para 'mass'
-  { value: 'extras', label: 'Acompanhamentos Extras' }, // Mudado de 'acompanhamentos' para 'extras'
+  { value: 'dishes', label: 'Pratos Principais' },
+  { value: 'mass', label: 'Massas' },
+  { value: 'extras', label: 'Acompanhamentos Extras' },
   { value: 'desserts', label: 'Sobremesas' },
   { value: 'drinks', label: 'Bebidas' }
 ];
 
 export default function CadastrarProduto() {
-  const navigate = useNavigate(); // Usar useNavigate de react-router-dom
+  const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const [formData, setFormData] = useState({
     nome: '',
@@ -54,39 +52,45 @@ export default function CadastrarProduto() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!validateForm()) {
-    setMessage({ text: 'Por favor, corrija os erros no formulário.', type: 'error' });
-    return;
-  }
+    if (!validateForm()) {
+      setMessage({ text: 'Por favor, corrija os erros no formulário.', type: 'error' });
+      return;
+    }
 
-  const produtosSalvos = JSON.parse(localStorage.getItem('produtos')) || [];
-  
-  const novoProduto = {
-    id: Date.now(),
-    ...formData,
-    // campos para compatibilidade com o Menu
-    name: formData.nome,
-    price: parseFloat(formData.preco),
-    description: formData.descricao,
-    stockQuantity: parseInt(formData.estoque) || 0,
-    image: formData.imagem,
-    // campos 
-    preco: parseFloat(formData.preco),
-    estoque: parseInt(formData.estoque) || 0
+    try {
+      const response = await fetch('http://localhost:3000/produtos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.nome,
+          description: formData.descricao,
+          price: parseFloat(formData.preco),
+          category: formData.categoria,
+          stockQuantity: parseInt(formData.estoque) || 0,
+          image: formData.imagem,
+          codigoBarras: formData.codigoBarras,
+          pesoTamanho: formData.pesoTamanho,
+          desconto: parseFloat(formData.desconto) || 0,
+          palavrasChave: formData.palavrasChave
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao cadastrar produto');
+      }
+
+      setMessage({ text: 'Produto cadastrado com sucesso!', type: 'success' });
+      setTimeout(() => navigate('/cardapio'), 2000);
+    } catch (error) {
+      console.error('Erro:', error);
+      setMessage({ text: 'Erro ao cadastrar produto', type: 'error' });
+    }
   };
-
-  produtosSalvos.push(novoProduto);
-  localStorage.setItem('produtos', JSON.stringify(produtosSalvos));
-  
-  // Forçar atualização em todas as abas
-  window.dispatchEvent(new Event('storage'));
-
-  setMessage({ text: 'Produto cadastrado com sucesso!', type: 'success' });
-  setTimeout(() => navigate('/cardapio'), 2000);
-};
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
@@ -94,7 +98,6 @@ export default function CadastrarProduto() {
       [field]: value
     }));
 
-    // Clear error 
     if (errors[field]) {
       setErrors(prev => ({
         ...prev,
@@ -103,19 +106,7 @@ export default function CadastrarProduto() {
     }
   };
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target && event.target.result;
-        handleInputChange('imagem', result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-   return (
+  return (
     <div className="cadastro-container">
       <div className="cadastro-card">
         <div className="cadastro-header">
@@ -166,7 +157,7 @@ export default function CadastrarProduto() {
                 value={formData.categoria}
                 onChange={(e) => handleInputChange('categoria', e.target.value)}
               >
-                <option value="">Secione uma categoria</option>
+                <option value="">Selecione uma categoria</option>
                 {categories.map((category) => (
                   <option key={category.value} value={category.value}>
                     {category.label}
@@ -249,18 +240,6 @@ export default function CadastrarProduto() {
                 placeholder="café, bebida, quente"
                 value={formData.palavrasChave}
                 onChange={(e) => handleInputChange('palavrasChave', e.target.value)}
-              />
-            </div>
-
-            {/* Upload de arquivo */}
-            <div className="form-group file-upload">
-              <label className="form-label" htmlFor="file-upload">Ou selecione um arquivo:</label>
-              <input
-                id="file-upload"
-                type="file"
-                accept="image/*"
-                className="form-input"
-                onChange={handleFileUpload}
               />
             </div>
 

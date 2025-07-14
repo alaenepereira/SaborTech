@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Menu from './pages/Menu/Options';
 import CadastrarProduto from './pages/Menu/CadastrarProduto';
 import EditarProduto from "./pages/Menu/EditarProduto";
+import ControleEstoque from "./pages/Menu/ControleEstoque";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -12,10 +13,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cardapio" element={<Menu />} /> {/* Options.jsx */}
+        <Route path="/cardapio" element={<Menu />} />
         <Route path="/add" element={<CadastrarProduto />} />
         <Route path="/editar/:id" element={<EditarProduto />} />
-        {/* outras rotas */}
+        <Route path="/estoque" element={<ControleEstoque />} />
       </Routes>
     </BrowserRouter>
   );

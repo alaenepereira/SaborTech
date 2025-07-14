@@ -7,7 +7,6 @@ export default function EditarProduto() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // Estado inicial 
   const [formData, setFormData] = useState({
     nome: '',
     preco: '',
@@ -24,7 +23,6 @@ export default function EditarProduto() {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
 
-  // Categorias 
   const categories = [
     { value: 'coffees', label: 'Cafés' },
     { value: 'salads', label: 'Saladas' },
@@ -35,22 +33,40 @@ export default function EditarProduto() {
     { value: 'drinks', label: 'Bebidas' }
   ];
 
-  // Carrega os dados do produto ao iniciar
   useEffect(() => {
-    const produtosSalvos = JSON.parse(localStorage.getItem("produtos")) || [];
-    const produto = produtosSalvos.find(p => p.id === parseInt(id));
-    if (produto) {
-      setFormData(produto);
-    }
+    const fetchProduto = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/produtos/${id}`);
+        if (!response.ok) {
+          throw new Error('Produto não encontrado');
+        }
+        const produto = await response.json();
+        setFormData({
+          nome: produto.name,
+          preco: produto.price,
+          categoria: produto.category,
+          descricao: produto.description,
+          imagem: produto.image,
+          estoque: produto.stockQuantity,
+          codigoBarras: produto.codigoBarras || '',
+          pesoTamanho: produto.pesoTamanho || '',
+          desconto: produto.desconto || '0',
+          palavrasChave: produto.palavrasChave || ''
+        });
+      } catch (error) {
+        console.error('Erro ao carregar produto:', error);
+        setMessage({ text: 'Erro ao carregar produto', type: 'error' });
+      }
+    };
+
+    fetchProduto();
   }, [id]);
 
-  // Função 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }));
   };
 
-  // Validação 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.nome.trim()) newErrors.nome = 'Nome é obrigatório';
@@ -61,24 +77,45 @@ export default function EditarProduto() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Submit adaptado para edição
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
       setMessage({ text: 'Corrija os erros no formulário', type: 'error' });
       return;
     }
 
-    const produtosSalvos = JSON.parse(localStorage.getItem("produtos")) || [];
-    const atualizados = produtosSalvos.map(p => 
-      p.id === parseInt(id) ? formData : p
-    );
-    localStorage.setItem("produtos", JSON.stringify(atualizados));
-    setMessage({ text: 'Produto atualizado com sucesso!', type: 'success' });
-    setTimeout(() => navigate('/cardapio'), 1500);
+    try {
+      const response = await fetch(`http://localhost:3000/produtos/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.nome,
+          price: parseFloat(formData.preco),
+          category: formData.categoria,
+          description: formData.descricao,
+          image: formData.imagem,
+          stockQuantity: parseInt(formData.estoque) || 0,
+          codigoBarras: formData.codigoBarras,
+          pesoTamanho: formData.pesoTamanho,
+          desconto: parseFloat(formData.desconto) || 0,
+          palavrasChave: formData.palavrasChave
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar produto');
+      }
+
+      setMessage({ text: 'Produto atualizado com sucesso!', type: 'success' });
+      setTimeout(() => navigate('/cardapio'), 1500);
+    } catch (error) {
+      console.error('Erro:', error);
+      setMessage({ text: 'Erro ao atualizar produto', type: 'error' });
+    }
   };
 
-  // Estrutura HTML 
   return (
     <div className="cadastro-container">
       <div className="cadastro-card">
@@ -106,7 +143,7 @@ export default function EditarProduto() {
                 placeholder="Ex: Café Expresso"
                 value={formData.nome}
                 onChange={(e) => handleInputChange('nome', e.target.value)}
-              />
+              /> 
               {errors.nome && <div className="form-error">{errors.nome}</div>}
             </div>
 

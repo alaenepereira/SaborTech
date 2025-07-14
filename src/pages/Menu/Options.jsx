@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import './Options.css';
 import Header from '../../Components/Header/Index';
-import EditIcon from '@mui/icons-material/Edit';
 
 function Menu() {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -144,18 +143,6 @@ function Menu() {
                   <Typography color="primary">
                     Preço: R$ {typeof item.price === 'number' ? item.price.toFixed(2) : '0.00'}
                   </Typography>
-                </CardContent>
-                <CardContent>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component={Link}
-                    to={`/editar/${item.id}`}
-                    startIcon={<EditIcon />}
-                    sx={{ mr: 1 }}
-                  >
-                    Editar
-                  </Button>
                 </CardContent>
               </Card>
             </Grid>
