@@ -38,7 +38,7 @@
 /* GRID QUE USA TODA A LARGURA */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns:  1fr 1fr;
   gap: 1.5rem;
   width: 100%;
 }
@@ -61,13 +61,18 @@
   font-size: 0.9rem;
 }
 
+
+
 .form-input, .form-select, .form-textarea {
+  width: 100%;
   padding: 0.75rem;
   border: 2px solid #e1e5e9;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  max-width: 100% ;
+  box-sizing: border-box;
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {

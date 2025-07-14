@@ -1,5 +1,3 @@
-
-import { Container } from "react-bootstrap";
 import './home.css'
 import Header from "../../Components/Header/Index";
 import Copyright from "../../Components/Footer";

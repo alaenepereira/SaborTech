@@ -2,6 +2,8 @@ import { useState } from "react";
 // REMOVER -> import { useLocation } from "wouter";
 import { useNavigate } from "react-router-dom"; // Importar useNavigate de react-router-dom
 import "./CadastrarProduto.css";
+import BackButton from "../../Components/Utils/BackButton";
+
 
 // Alterar o objeto de categorias para usar os mesmos valores do Menu
 const categories = [
@@ -15,6 +17,7 @@ const categories = [
 ];
 
 export default function CadastrarProduto() {
+
   const navigate = useNavigate(); // Usar useNavigate de react-router-dom
   const [message, setMessage] = useState(null);
   const [formData, setFormData] = useState({
@@ -55,38 +58,38 @@ export default function CadastrarProduto() {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!validateForm()) {
-    setMessage({ text: 'Por favor, corrija os erros no formulário.', type: 'error' });
-    return;
-  }
+    if (!validateForm()) {
+      setMessage({ text: 'Por favor, corrija os erros no formulário.', type: 'error' });
+      return;
+    }
 
-  const produtosSalvos = JSON.parse(localStorage.getItem('produtos')) || [];
-  
-  const novoProduto = {
-    id: Date.now(),
-    ...formData,
-    // campos para compatibilidade com o Menu
-    name: formData.nome,
-    price: parseFloat(formData.preco),
-    description: formData.descricao,
-    stockQuantity: parseInt(formData.estoque) || 0,
-    image: formData.imagem,
-    // campos 
-    preco: parseFloat(formData.preco),
-    estoque: parseInt(formData.estoque) || 0
+    const produtosSalvos = JSON.parse(localStorage.getItem('produtos')) || [];
+
+    const novoProduto = {
+      id: Date.now(),
+      ...formData,
+      // campos para compatibilidade com o Menu
+      name: formData.nome,
+      price: parseFloat(formData.preco),
+      description: formData.descricao,
+      stockQuantity: parseInt(formData.estoque) || 0,
+      image: formData.imagem,
+      // campos 
+      preco: parseFloat(formData.preco),
+      estoque: parseInt(formData.estoque) || 0
+    };
+
+    produtosSalvos.push(novoProduto);
+    localStorage.setItem('produtos', JSON.stringify(produtosSalvos));
+
+    // Forçar atualização em todas as abas
+    window.dispatchEvent(new Event('storage'));
+
+    setMessage({ text: 'Produto cadastrado com sucesso!', type: 'success' });
+    setTimeout(() => navigate('/cardapio'), 2000);
   };
-
-  produtosSalvos.push(novoProduto);
-  localStorage.setItem('produtos', JSON.stringify(produtosSalvos));
-  
-  // Forçar atualização em todas as abas
-  window.dispatchEvent(new Event('storage'));
-
-  setMessage({ text: 'Produto cadastrado com sucesso!', type: 'success' });
-  setTimeout(() => navigate('/cardapio'), 2000);
-};
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
@@ -115,11 +118,16 @@ export default function CadastrarProduto() {
     }
   };
 
-   return (
+
+
+  return (
     <div className="cadastro-container">
       <div className="cadastro-card">
+
+
         <div className="cadastro-header">
-          <h1 className="cadastro-title">Cadastro de Produto</h1>
+          <BackButton />
+          <h1 className="cadastro-title" >Cadastro de Produto</h1>
         </div>
 
         <div className="cadastro-content">
