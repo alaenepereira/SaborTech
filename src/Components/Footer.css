@@ -3,10 +3,15 @@
  text-align: center;
   padding: 5px 0;
   position: relative;
+<<<<<<< HEAD
+  width: 100%;
+  z-index: 2;
+=======
   margin-top: auto;
   width: 100%;
   z-index: 2;
   bottom: 0;
+>>>>>>> bbb04a0973af64777ec7f55ad558cd9dd5de877e
 }
 
 .footer p{

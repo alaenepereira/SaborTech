@@ -49,6 +49,8 @@ body, html {
   font-weight: bold;
   color: #ffffff88;
   
+<<<<<<< HEAD
+=======
   
 
 }
@@ -89,6 +91,7 @@ body, html {
   font-weight: bold;
   color: #ffffff88;
   
+>>>>>>> bbb04a0973af64777ec7f55ad558cd9dd5de877e
 
 }
 
@@ -97,6 +100,33 @@ body, html {
   transform: scale(1.05);
   transition: 0.5s;
 }
+<<<<<<< HEAD
+.menu-icon{
+  position: fixed;
+  display: inline-block;
+  top: 1rem;
+  right: 1rem;
+  background:none;
+  border: 'none';
+  font-Size: '1.5rem';
+   margin-Left: '1rem';
+   display: none;
+ 
+  
+  
+  
+}
+@media (max-width: 768px) {
+  .header{
+    display: none;
+    
+  }
+  .menu-icon {
+    display: flex; 
+     
+  }
+=======
+>>>>>>> bbb04a0973af64777ec7f55ad558cd9dd5de877e
 
  
 }

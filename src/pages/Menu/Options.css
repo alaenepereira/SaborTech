@@ -1,4 +1,3 @@
-
 .category-buttons {
   background-color: #f5f5f5;
   border-bottom: 1px solid #ccc;
@@ -9,35 +8,32 @@
   flex-wrap: nowrap;
   gap: 8px;
 }
-.category-buttons button{
+
+.category-buttons button {
   width: 100%;
   max-width: 300px;
-  
 }
 
 .card-grid {
-  
- width: 100%;
+  width: 100%;
   margin: 0 auto;
   padding: 0 8px; 
   justify-content: flex-start;
   overflow: visible;
 }
 
- 
 .product-card {
   transition: transform 0.3s, box-shadow 0.3s;
-   display: flex;
-   color: #f5f5f5;
-   padding: 6px;
-   width: 100%;
-   flex-direction: column;
-   margin: 0 auto;
-   border-radius: 5px;
-   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.8);
-   height: 100%;
-
-  
+  display: flex;
+  color: #f5f5f5;
+  padding: 6px;
+  width: 100%;
+  flex-direction: column;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.8);
+  height: 100%;
+  cursor: pointer;
 }
 
 .product-card:hover {
@@ -55,21 +51,21 @@
 
 .product-title {
   font-weight: bold;
-
 }
+
 .menu-content {
   background-color: #2c2c2c;
 }
 
-
 .category-buttons .MuiButton-root {
   margin-right: 8px;
-  flex-shrink: 0;     
+  flex-shrink: 0;
 }
 
-.icons{
+.icons {
   background: red;
 }
+
 @media (min-width: 600px) {
   .category-buttons {
     flex-direction: column;
@@ -79,18 +75,21 @@
     justify-content: flex-start;
     align-items: flex-start;
     font-size: 12px;
-    display: none;
-   }
- 
-  .product-card{
+    display: none; /* Pode ajustar conforme necessidade */
+  }
+
+  .category-buttons .MuiButton-root {
+    margin-bottom: 8px;
+  }
+
+  .product-card {
     flex-direction: column;
     min-width: 100%;
-   
-  } 
+  }
 }
 
-@media (max-width: 767px){
-    .category-buttons {
+@media (max-width: 767px) {
+  .category-buttons {
     flex-direction: column;
     flex-wrap: wrap;
     overflow-x: auto;  
@@ -98,23 +97,17 @@
     justify-content: flex-start;
     align-items: flex-start;
     font-size: 12px;
-    display: none;
-   }
- 
-  .product-card{
+    display: none; /* Pode ajustar conforme necessidade */
+  }
+
+  .product-card {
     flex-direction: column;
     min-width: 100%;
-   
   }
-  
-   .card-grid {
+
+  .card-grid {
     padding: 0 4px;
     gap: 8px;
     flex-direction: column;
   }
 }
-
-
-
-
-
