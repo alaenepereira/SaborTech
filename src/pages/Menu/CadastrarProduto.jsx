@@ -1,20 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CadastrarProduto.css";
-
-const categories = [
-  { value: 'coffees', label: 'Cafés' },
-  { value: 'salads', label: 'Saladas' },
-  { value: 'dishes', label: 'Pratos Principais' },
-  { value: 'mass', label: 'Massas' },
-  { value: 'extras', label: 'Acompanhamentos Extras' },
-  { value: 'desserts', label: 'Sobremesas' },
-  { value: 'drinks', label: 'Bebidas' }
-];
+import AddIcon from '@mui/icons-material/Add';
+import { productService } from '../../services/productService';
 
 export default function CadastrarProduto() {
   const navigate = useNavigate();
-  const [message, setMessage] = useState(null);
+
   const [formData, setFormData] = useState({
     nome: '',
     preco: '',
@@ -25,84 +17,84 @@ export default function CadastrarProduto() {
     codigoBarras: '',
     pesoTamanho: '',
     desconto: '0',
-    palavrasChave: '',
+    palavrasChave: ''
   });
+
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  const categories = [
+    { value: 'coffees', label: 'Cafés' },
+    { value: 'salads', label: 'Saladas' },
+    { value: 'dishes', label: 'Pratos Principais' },
+    { value: 'mass', label: 'Massas' },
+    { value: 'extras', label: 'Acompanhamentos' },
+    { value: 'desserts', label: 'Sobremesas' },
+    { value: 'drinks', label: 'Bebidas' }
+  ];
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }));
+  };
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.nome.trim()) {
-      newErrors.nome = 'Nome é obrigatório';
-    }
-
-    if (!formData.preco || parseFloat(formData.preco) <= 0) {
-      newErrors.preco = 'Preço deve ser maior que zero';
-    }
-
-    if (!formData.categoria) {
-      newErrors.categoria = 'Categoria é obrigatória';
-    }
-
-    if (!formData.descricao.trim()) {
-      newErrors.descricao = 'Descrição é obrigatória';
-    }
-
+    if (!formData.nome.trim()) newErrors.nome = 'Nome é obrigatório';
+    if (!formData.preco || parseFloat(formData.preco) <= 0) newErrors.preco = 'Preço inválido';
+    if (!formData.categoria) newErrors.categoria = 'Selecione uma categoria';
+    if (!formData.descricao.trim()) newErrors.descricao = 'Descrição é obrigatória';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     if (!validateForm()) {
-      setMessage({ text: 'Por favor, corrija os erros no formulário.', type: 'error' });
+      setMessage({ text: 'Corrija os erros no formulário', type: 'error' });
       return;
     }
 
+    setIsSubmitting(true);
+    setMessage(null);
+
     try {
-      const response = await fetch('http://localhost:3000/produtos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.nome,
-          description: formData.descricao,
-          price: parseFloat(formData.preco),
-          category: formData.categoria,
-          stockQuantity: parseInt(formData.estoque) || 0,
-          image: formData.imagem,
-          codigoBarras: formData.codigoBarras,
-          pesoTamanho: formData.pesoTamanho,
-          desconto: parseFloat(formData.desconto) || 0,
-          palavrasChave: formData.palavrasChave
-        }),
-      });
+      const productData = {
+        name: formData.nome,
+        price: parseFloat(formData.preco),
+        category: formData.categoria,
+        description: formData.descricao,
+        image: formData.imagem || 'https://via.placeholder.com/150',
+        stockQuantity: parseInt(formData.estoque) || 0,
+        codigoBarras: formData.codigoBarras,
+        pesoTamanho: formData.pesoTamanho,
+        desconto: parseFloat(formData.desconto) || 0,
+        palavrasChave: formData.palavrasChave,
+        createdAt: new Date().toISOString()
+      };
 
-      if (!response.ok) {
-        throw new Error('Erro ao cadastrar produto');
+      const createdProduct = await productService.createProduct(productData);
+
+      if (createdProduct) {
+        await productService.clearCache();
+        setMessage({ 
+          text: 'Produto cadastrado com sucesso! Redirecionando...', 
+          type: 'success' 
+        });
+        setTimeout(() => navigate('/estoque'), 1500);
+      } else {
+        throw new Error('Não foi possível cadastrar o produto');
       }
-
-      setMessage({ text: 'Produto cadastrado com sucesso!', type: 'success' });
-      setTimeout(() => navigate('/cardapio'), 2000);
     } catch (error) {
-      console.error('Erro:', error);
-      setMessage({ text: 'Erro ao cadastrar produto', type: 'error' });
-    }
-  };
-
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-
-    if (errors[field]) {
-      setErrors(prev => ({
-        ...prev,
-        [field]: ''
-      }));
+      console.error('Erro ao cadastrar produto:', error);
+      setMessage({ 
+        text: 'Erro ao cadastrar produto. Tente novamente.', 
+        type: 'error' 
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -110,7 +102,10 @@ export default function CadastrarProduto() {
     <div className="cadastro-container">
       <div className="cadastro-card">
         <div className="cadastro-header">
-          <h1 className="cadastro-title">Cadastro de Produto</h1>
+          <h1 className="cadastro-title">
+            <AddIcon sx={{ verticalAlign: 'middle', mr: 1 }} />
+            Cadastrar Novo Produto
+          </h1>
         </div>
 
         <div className="cadastro-content">
@@ -121,139 +116,149 @@ export default function CadastrarProduto() {
           )}
 
           <form onSubmit={handleSubmit} className="form-grid">
-            {/* Nome do Produto */}
+            {/* Nome */}
             <div className="form-group">
-              <label className="form-label">Nome do Produto *</label>
+              <label htmlFor="nome">Nome*</label>
               <input
+                id="nome"
                 type="text"
-                className="form-input"
-                placeholder="Ex: Café Expresso"
                 value={formData.nome}
                 onChange={(e) => handleInputChange('nome', e.target.value)}
+                className={errors.nome ? 'input-error' : ''}
+                disabled={isSubmitting}
+                placeholder="Nome do produto"
               />
-              {errors.nome && <div className="form-error">{errors.nome}</div>}
+              {errors.nome && <span className="error-message">{errors.nome}</span>}
             </div>
 
             {/* Preço */}
             <div className="form-group">
-              <label className="form-label">Preço *</label>
+              <label htmlFor="preco">Preço*</label>
               <input
+                id="preco"
                 type="number"
                 step="0.01"
-                min="0.01"
-                className="form-input"
-                placeholder="0.00"
+                min="0"
                 value={formData.preco}
                 onChange={(e) => handleInputChange('preco', e.target.value)}
+                className={errors.preco ? 'input-error' : ''}
+                disabled={isSubmitting}
+                placeholder="0.00"
               />
-              {errors.preco && <div className="form-error">{errors.preco}</div>}
+              {errors.preco && <span className="error-message">{errors.preco}</span>}
             </div>
 
             {/* Categoria */}
             <div className="form-group">
-              <label className="form-label">Categoria *</label>
+              <label htmlFor="categoria">Categoria*</label>
               <select
-                className="form-select"
+                id="categoria"
                 value={formData.categoria}
                 onChange={(e) => handleInputChange('categoria', e.target.value)}
+                className={errors.categoria ? 'input-error' : ''}
+                disabled={isSubmitting}
               >
-                <option value="">Selecione uma categoria</option>
-                {categories.map((category) => (
-                  <option key={category.value} value={category.value}>
-                    {category.label}
+                <option value="">Selecione uma categoria...</option>
+                {categories.map((cat) => (
+                  <option key={cat.value} value={cat.value}>
+                    {cat.label}
                   </option>
                 ))}
               </select>
-              {errors.categoria && <div className="form-error">{errors.categoria}</div>}
+              {errors.categoria && <span className="error-message">{errors.categoria}</span>}
             </div>
 
-            {/* URL da Imagem */}
-            <div className="form-group">
-              <label className="form-label">URL da Imagem</label>
+            {/* Descrição */}
+            <div className="form-group full-width">
+              <label htmlFor="descricao">Descrição*</label>
+              <textarea
+                id="descricao"
+                value={formData.descricao}
+                onChange={(e) => handleInputChange('descricao', e.target.value)}
+                className={errors.descricao ? 'input-error' : ''}
+                rows="4"
+                disabled={isSubmitting}
+                placeholder="Descrição detalhada do produto"
+              />
+              {errors.descricao && <span className="error-message">{errors.descricao}</span>}
+            </div>
+
+            {/* Imagem */}
+            <div className="form-group full-width">
+              <label htmlFor="imagem">URL da Imagem</label>
               <input
-                type="url"
-                className="form-input"
-                placeholder="https://exemplo.com/imagem.jpg"
+                id="imagem"
+                type="text"
                 value={formData.imagem}
                 onChange={(e) => handleInputChange('imagem', e.target.value)}
+                disabled={isSubmitting}
+                placeholder="https://exemplo.com/imagem.jpg"
               />
             </div>
 
             {/* Estoque */}
             <div className="form-group">
-              <label className="form-label">Estoque</label>
+              <label htmlFor="estoque">Estoque</label>
               <input
+                id="estoque"
                 type="number"
                 min="0"
-                className="form-input"
-                placeholder="0"
                 value={formData.estoque}
                 onChange={(e) => handleInputChange('estoque', e.target.value)}
+                disabled={isSubmitting}
               />
             </div>
 
             {/* Código de Barras */}
             <div className="form-group">
-              <label className="form-label">Código de Barras</label>
+              <label htmlFor="codigoBarras">Código de Barras</label>
               <input
+                id="codigoBarras"
                 type="text"
-                className="form-input"
-                placeholder="123456789"
                 value={formData.codigoBarras}
                 onChange={(e) => handleInputChange('codigoBarras', e.target.value)}
+                disabled={isSubmitting}
               />
             </div>
 
-            {/* Peso e Tamanho */}
+            {/* Peso/Tamanho */}
             <div className="form-group">
-              <label className="form-label">Peso e Tamanho</label>
+              <label htmlFor="pesoTamanho">Peso/Tamanho</label>
               <input
+                id="pesoTamanho"
                 type="text"
-                className="form-input"
-                placeholder="Ex: 500g, 250ml"
                 value={formData.pesoTamanho}
                 onChange={(e) => handleInputChange('pesoTamanho', e.target.value)}
+                disabled={isSubmitting}
+                placeholder="Ex: 500g, 300ml"
               />
             </div>
 
             {/* Desconto */}
             <div className="form-group">
-              <label className="form-label">Desconto (%)</label>
+              <label htmlFor="desconto">Desconto (%)</label>
               <input
+                id="desconto"
                 type="number"
                 min="0"
                 max="100"
-                step="0.01"
-                className="form-input"
-                placeholder="0"
                 value={formData.desconto}
                 onChange={(e) => handleInputChange('desconto', e.target.value)}
+                disabled={isSubmitting}
               />
             </div>
 
             {/* Palavras-chave */}
-            <div className="form-group">
-              <label className="form-label">Palavras-chave</label>
+            <div className="form-group full-width">
+              <label htmlFor="palavrasChave">Palavras-chave (separadas por vírgula)</label>
               <input
+                id="palavrasChave"
                 type="text"
-                className="form-input"
-                placeholder="café, bebida, quente"
                 value={formData.palavrasChave}
                 onChange={(e) => handleInputChange('palavrasChave', e.target.value)}
+                disabled={isSubmitting}
+                placeholder="Ex: café,expresso,quente"
               />
-            </div>
-
-            {/* Descrição */}
-            <div className="form-group full-width">
-              <label className="form-label">Descrição *</label>
-              <textarea
-                className="form-textarea"
-                placeholder="Descreva o produto..."
-                rows={4}
-                value={formData.descricao}
-                onChange={(e) => handleInputChange('descricao', e.target.value)}
-              />
-              {errors.descricao && <div className="form-error">{errors.descricao}</div>}
             </div>
 
             {/* Botão de Submit */}
@@ -261,9 +266,13 @@ export default function CadastrarProduto() {
               <button
                 type="submit"
                 className="submit-button"
+                disabled={isSubmitting}
               >
-                <span>+</span>
-                Cadastrar Produto
+                {isSubmitting ? (
+                  <span>CADASTRANDO...</span>
+                ) : (
+                  <span>CADASTRAR PRODUTO</span>
+                )}
               </button>
             </div>
           </form>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import './Options.css';
 import Header from '../../Components/Header/Index';
+import { productService } from '../../services/productService';
 
 function Menu() {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -22,21 +23,18 @@ function Menu() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadProducts = () => {
+    const loadProducts = async () => {
       try {
-        const savedProducts = JSON.parse(localStorage.getItem('produtos')) || [];
-        
-        // Normaliza os dados dos produtos
-        const normalizedProducts = savedProducts.map(produto => ({
-          id: produto.id || Date.now(),
-          name: produto.nome || produto.name || 'Produto sem nome',
-          description: produto.descricao || produto.description || 'Sem descrição',
-          price: parseFloat(produto.preco || produto.price || 0),
-          image: produto.imagem || produto.image || '',
-          category: produto.categoria || produto.category || '',
-          stockQuantity: parseInt(produto.estoque || produto.stockQuantity || 0)
+        const data = await productService.getAllProducts();
+        const normalizedProducts = data.map(produto => ({
+          id: produto.id,
+          name: produto.name || 'Produto sem nome',
+          description: produto.description || 'Sem descrição',
+          price: parseFloat(produto.price || 0),
+          image: produto.image || 'https://via.placeholder.com/150',
+          category: produto.category || '',
+          stockQuantity: parseInt(produto.stockQuantity || 0)
         }));
-        
         setProdutos(normalizedProducts);
       } catch (error) {
         console.error('Erro ao carregar produtos:', error);
@@ -46,30 +44,12 @@ function Menu() {
     };
 
     loadProducts();
-    window.addEventListener('storage', loadProducts);
-    return () => window.removeEventListener('storage', loadProducts);
   }, []);
 
   const getProductsByCategory = () => {
-    if (!produtos.length) return [];
-    
-    return produtos.filter(produto => {
-      const productCategory = produto.category?.toLowerCase() || '';
-      const activeCat = activeCategory.toLowerCase();
-      
-      // Mapeamento de categorias alternativas
-      const categoryMap = {
-        'dishes': ['pratos principais', 'dishes'],
-        'mass': ['massas', 'mass'],
-        'extras': ['acompanhamentos', 'extras']
-      };
-      
-      return (
-        productCategory === activeCat ||
-        (categoryMap[activeCat]?.includes(productCategory)) ||
-        productCategory.includes(activeCat)
-      );
-    });
+    return produtos.filter(produto => 
+      produto.category?.toLowerCase() === activeCategory.toLowerCase()
+    );
   };
 
   const categories = [
@@ -141,7 +121,7 @@ function Menu() {
                 <CardContent>
                   <Typography>Estoque: {item.stockQuantity}</Typography>
                   <Typography color="primary">
-                    Preço: R$ {typeof item.price === 'number' ? item.price.toFixed(2) : '0.00'}
+                    Preço: R$ {item.price.toFixed(2)}
                   </Typography>
                 </CardContent>
               </Card>

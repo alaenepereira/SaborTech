@@ -1,5 +1,5 @@
-import React, { useState } from 'react';  // Mantive essa importação que é mais padrão
-import { Navbar, Nav, Container } from "react-bootstrap";
+import React, { useState } from 'react';
+import { Container, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./style.css";
 
@@ -16,18 +16,16 @@ export default function Header() {
         <Navbar.Brand as={Link} to="/">SaborTech</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-        <div className={`Header ${menuOpen ? 'active' : ''}`}></div>
         <Navbar.Collapse id="basic-navbar-nav" in={menuOpen}>
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/">Inicio</Nav.Link>
             <Nav.Link as={Link} to="/cardapio">Menu</Nav.Link>
             <Nav.Link as={Link} to="/add">Adicionar ao cardápio</Nav.Link>
-            <Nav.Link as={Link} to="/estoque">Controle de estoque</Nav.Link> {/* Mantive "/estoque" */}
+            <Nav.Link as={Link} to="/estoque">Controle de estoque</Nav.Link>
           </Nav>
         </Navbar.Collapse>
-
         <button className="menu-icon" onClick={toggleMenu}>
-          {menuOpen ? 'X' : '☰'}
+          {menuOpen ? '✕' : '☰'}
         </button>
       </Container>
     </Navbar>
