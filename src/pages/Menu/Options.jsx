@@ -13,7 +13,8 @@ import {
 } from '@mui/material';
 import './Options.css';
 import Header from '../../Components/Header/Index';
-import { productService } from '../../services/productService.js';
+import { productService } from '../../services/productService';
+
 
 function Menu() {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
