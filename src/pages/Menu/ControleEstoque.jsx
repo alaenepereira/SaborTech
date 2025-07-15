@@ -15,6 +15,8 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import Header from '../../Components/Header/Index';
 import { productService } from '../../services/productService';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function ControleEstoque() {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -41,7 +43,7 @@ function ControleEstoque() {
   const handleUpdateStock = async (id, newStock) => {
     try {
       await productService.updateProduct(id, { stockQuantity: parseInt(newStock) });
-      const updatedProdutos = produtos.map(produto => 
+      const updatedProdutos = produtos.map(produto =>
         produto.id === id ? { ...produto, stockQuantity: parseInt(newStock) } : produto
       );
       setProdutos(updatedProdutos);
@@ -51,9 +53,20 @@ function ControleEstoque() {
   };
 
   const handleEditProduct = (productId) => {
-    navigate(`/editar/${productId}`, { 
+    navigate(`/editar/${productId}`, {
       state: { fromEstoque: true }
     });
+  };
+
+  const handleDeleteProduct = async (id) => {
+    if (window.confirm("Tem certeza que deseja excluir este produto?")) {
+      try {
+        await productService.deleteProduct(id);
+        setProdutos(produtos.filter(prod => prod.id !== id));
+      } catch (error) {
+        console.error('Erro ao excluir produto:', error);
+      }
+    }
   };
 
   const filteredProdutos = produtos.filter(produto =>
@@ -75,7 +88,7 @@ function ControleEstoque() {
         <Typography variant="h4" gutterBottom>
           Controle de Estoque
         </Typography>
-        
+
         <TextField
           label="Buscar produto"
           variant="outlined"
@@ -85,11 +98,11 @@ function ControleEstoque() {
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{ mb: 3 }}
         />
-        
+
         <Grid container spacing={2}>
           {filteredProdutos.map((produto) => (
             <Grid item xs={12} sm={6} md={4} key={produto.id}>
-              <Card sx={{ maxWidth: isSmallScreen ? '100%' : 345, m: 1 }}>
+              <Card sx={{ maxWidth: isSmallScreen ? '100%' : 345, m: 1 }} className='product-card'>
                 <CardMedia
                   component="img"
                   height="200"
@@ -128,6 +141,17 @@ function ControleEstoque() {
                     fullWidth
                   >
                     Editar Produto
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="white"
+                    style={{ backgroundColor: 'red' }}
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleDeleteProduct(produto.id)}
+                    fullWidth
+                    sx={{ mt: 1 }}
+                  >
+                    Excluir Produto
                   </Button>
                 </CardContent>
               </Card>

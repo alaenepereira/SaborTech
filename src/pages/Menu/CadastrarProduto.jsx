@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CadastrarProduto.css";
+import BackButton from "../../Components/Utils/BackButton";
+
 import AddIcon from '@mui/icons-material/Add';
 import { productService } from '../../services/productService';
 
 export default function CadastrarProduto() {
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -51,7 +54,7 @@ export default function CadastrarProduto() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       setMessage({ text: 'Corrija os erros no formulário', type: 'error' });
       return;
@@ -72,16 +75,16 @@ export default function CadastrarProduto() {
         pesoTamanho: formData.pesoTamanho,
         desconto: parseFloat(formData.desconto) || 0,
         palavrasChave: formData.palavrasChave,
-        
+
       };
 
       const createdProduct = await productService.createProduct(productData);
 
       if (createdProduct) {
         await productService.clearCache();
-        setMessage({ 
-          text: 'Produto cadastrado com sucesso! Redirecionando...', 
-          type: 'success' 
+        setMessage({
+          text: 'Produto cadastrado com sucesso! Redirecionando...',
+          type: 'success'
         });
         setTimeout(() => navigate('/estoque'), 1500);
       } else {
@@ -89,20 +92,25 @@ export default function CadastrarProduto() {
       }
     } catch (error) {
       console.error('Erro ao cadastrar produto:', error);
-      setMessage({ 
-        text: 'Erro ao cadastrar produto. Tente novamente.', 
-        type: 'error' 
+      setMessage({
+        text: 'Erro ao cadastrar produto. Tente novamente.',
+        type: 'error'
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
+
+
   return (
     <div className="cadastro-container">
       <div className="cadastro-card">
+
+
         <div className="cadastro-header">
-          <h1 className="cadastro-title">
+          <BackButton />
+          <h1 className="cadastro-title" >
             <AddIcon sx={{ verticalAlign: 'middle', mr: 1 }} />
             Cadastrar Novo Produto
           </h1>

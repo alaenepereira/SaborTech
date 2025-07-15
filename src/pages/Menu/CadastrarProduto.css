@@ -38,7 +38,7 @@
 /* GRID QUE USA TODA A LARGURA */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns:  1fr 1fr;
   gap: 1.5rem;
   width: 100%;
 }
@@ -61,25 +61,40 @@
   font-size: 0.9rem;
 }
 
-.form-input, .form-select, .form-textarea {
-  padding: 0.75rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background: white;
-}
 
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  outline: none;
-  border-color: #d35400;
-  box-shadow: 0 0 0 3px rgba(255, 123, 0, 0.1);
-}
+
+
 
 .form-textarea {
   resize: vertical;
   min-height: 100px;
 }
+form input,
+form select,
+form textarea {
+   background-color: white;
+  color: black;                
+  border: 1px solid #1a1919;       
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form input::placeholder,
+form textarea::placeholder {
+  color: #888;                 
+}
+
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #ff6600;
+  box-shadow: 0 0 3px #ff6600;
+}
+
 
 .form-select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
@@ -189,6 +204,7 @@
 .MuiPaper-root {
   background-color: transparent !important;
   box-shadow: none !important;
+ 
 }
 
 /* Ajusta o ícone de edição */
@@ -374,3 +390,4 @@
     padding: 1rem;
   }
 }
+

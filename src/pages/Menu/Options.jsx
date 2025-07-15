@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   Typography,
@@ -10,60 +9,42 @@ import {
   CardContent,
   CardMedia,
   useMediaQuery,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
 import './Options.css';
 import Header from '../../Components/Header/Index';
-import { productService } from '../../services/productService';
+import { productService } from '../../services/productService.js';
 
 function Menu() {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
-  const [activeCategory, setActiveCategory] = useState('coffees');
-  const [produtos, setProdutos] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+
+  const [activeCategory, setActiveCategory] = useState('coffee');
+  const [menuItems, setMenuItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
-    const loadProducts = async () => {
+    const fetchItemsByCategory = async () => {
       try {
-        const data = await productService.getAllProducts();
-        const normalizedProducts = data.map(produto => ({
-          id: produto.id,
-          name: produto.name || 'Produto sem nome',
-          description: produto.description || 'Sem descrição',
-          price: parseFloat(produto.price || 0),
-          image: produto.image || 'https://via.placeholder.com/150',
-          category: produto.category || '',
-          stockQuantity: parseInt(produto.stockQuantity || 0)
-        }));
-        setProdutos(normalizedProducts);
+        setIsLoading(true);
+        const data = await productService.getProductByCategory(activeCategory);
+        setMenuItems(data);
       } catch (error) {
-        console.error('Erro ao carregar produtos:', error);
+        console.error('Erro ao carregar itens:', error)
+        setMenuItems([]);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
-    loadProducts();
-  }, []);
-
-  const getProductsByCategory = () => {
-    return produtos.filter(produto => 
-      produto.category?.toLowerCase() === activeCategory.toLowerCase()
-    );
-  };
-
- const categories = [
-    { value: 'coffee', label: 'Cafés' },
-    { value: 'salad', label: 'Saladas' },
-    { value: 'mainDish', label: 'Pratos Principais' },
-    { value: 'massas', label: 'Massas' },
-    { value: 'extraSideDish', label: 'Acompanhamentos' },
-    { value: 'dessert', label: 'Sobremesas' },
-    { value: 'drink', label: 'Bebidas' }
-  ];
+    fetchItemsByCategory();
+  }, [activeCategory]);
 
 
-  if (loading) {
+
+
+  if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
         <CircularProgress />
@@ -74,61 +55,54 @@ function Menu() {
   return (
     <>
       <Header />
-      <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant="h4">Cardápio</Typography>
-        <Button
-          variant="contained"
-          color="success"
-          component={Link}
-          to="/add"
-        >
-          Novo Produto
-        </Button>
-      </Box>
-      
-      <Box sx={{ p: 2 }}>
-        <Stack direction="row" spacing={2} sx={{ overflowX: 'auto', py: 1 }}>
-          {categories.map((category) => (
-            <Button
-              key={category.value}
-              variant={activeCategory === category.value ? 'contained' : 'outlined'}
-              onClick={() => setActiveCategory(category.value)}
-              sx={{ minWidth: 'max-content' }}
-            >
-              {category.label}
-            </Button>
-          ))}
+      <Box sx={{ padding: 2 }}>
+        <Stack direction="row" spacing={1} className="category-buttons" sx={{ flexWrap: 'wrap', gap: 1 }}>
+          <Button variant={activeCategory === 'coffee' ? 'contained' : 'outlined'} onClick={() => setActiveCategory('coffee')}>Cafés</Button>
+          <Button variant={activeCategory === 'salad' ? 'contained' : 'outlined'} onClick={() => setActiveCategory('salad')}>Saladas</Button>
+          <Button variant={activeCategory === 'mainDish' ? 'contained' : 'outlined'} onClick={() => setActiveCategory('mainDish')}>Pratos Principais</Button>
+          <Button variant={activeCategory === 'massas' ? 'contained' : 'outlined'} onClick={() => setActiveCategory('massas')}>Massas</Button>
+          <Button variant={activeCategory === 'extraSideDish' ? 'contained' : 'outlined'} onClick={() => setActiveCategory('extraSideDish')}>Acompanhamentos</Button>
+          <Button variant={activeCategory === 'dessert' ? 'contained' : 'outlined'} onClick={() => setActiveCategory('dessert')}>Sobremesas</Button>
+          <Button variant={activeCategory === 'drink' ? 'contained' : 'outlined'} onClick={() => setActiveCategory('drink')}>Bebidas</Button>
         </Stack>
       </Box>
-      
-      <Box sx={{ p: 4 }}>
-        <Grid container spacing={2} className="card-grid">
-          {getProductsByCategory().map((item) => (
-            <Grid item xs={12} sm={6} md={4} key={item.id}>
-              <Card sx={{ maxWidth: isSmallScreen ? '100%' : '345px', m: 1 }}>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={item.image}
-                  alt={item.name}
-                  style={{ objectFit: 'cover' }}
-                />
-                <CardContent>
-                  <Typography variant="h6">{item.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {item.description}
-                  </Typography>
-                </CardContent>
-                <CardContent>
-                  <Typography>Estoque: {item.stockQuantity}</Typography>
-                  <Typography color="primary">
-                    Preço: R$ {item.price.toFixed(2)}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+
+      <Box sx={{ padding: 2, display: 'flex', justifyContent: 'center' }}>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Grid container spacing={2} className="card-grid">
+            {menuItems.map((item) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+                <Card sx={{ maxWidth: 345, width: '100%', m: 'auto', display: 'flex', flexDirection: 'column', height: '100%' }} className='product-card'>
+                  <CardMedia className='product-card'
+                    component="img"
+                    sx={{ height: isSmallScreen ? 180 : 200, objectFit: 'cover' }}
+                    image={item.image}
+                    alt={item.name}
+                  />
+                  <CardContent sx={{ flexGrow: 1, minHeight: 120 }}>
+                    <Typography variant="h6" component='div' className="product-title"
+                      sx={{ minHeight: 40, overflow: 'hidden', textOverflow: 'ellipsis' }}
+                    >{item.name}</Typography>
+                    <Typography variant="body2" color="text.secondary"
+                      sx={{ minHeight: 60, overflow: 'hidden', textOverflow: 'ellipsis' }}
+                    >{item.description}</Typography>
+                  </CardContent>
+                  <CardContent>
+                    <Typography variant='subtitle1' color='text.primary' fontWeight={'bold'}>
+                      {`Disponíveis: ${item.stockQuantity}`}
+                    </Typography>
+                    <Typography variant="h6" color="primary">
+                      {`R$ ${item.price.toFixed(2).replace('.', ',')}`}
+                    </Typography>
+                  </CardContent>
+
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
     </>
   );

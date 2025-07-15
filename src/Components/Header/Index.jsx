@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { Container, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./style.css";
+import BackButton from '../Utils/BackButton';
+
+
 
 export default function Header() {
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -11,8 +15,11 @@ export default function Header() {
   };
 
   return (
+
     <Navbar expand="lg" data-bs-theme="dark" sticky="top" className="navbar-custom">
-      <Container fluid className="header">
+      <BackButton />
+      <Container fluid className="header ">
+
         <Navbar.Brand as={Link} to="/">SaborTech</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
