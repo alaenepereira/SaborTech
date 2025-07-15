@@ -26,14 +26,14 @@ export default function EditarProduto() {
   const [message, setMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const categories = [
-    { value: 'coffees', label: 'Cafés' },
-    { value: 'salads', label: 'Saladas' },
-    { value: 'dishes', label: 'Pratos Principais' },
-    { value: 'mass', label: 'Massas' },
-    { value: 'extras', label: 'Acompanhamentos' },
-    { value: 'desserts', label: 'Sobremesas' },
-    { value: 'drinks', label: 'Bebidas' }
+ const categories = [
+    { value: 'coffee', label: 'Cafés' },
+    { value: 'salad', label: 'Saladas' },
+    { value: 'mainDish', label: 'Pratos Principais' },
+    { value: 'massas', label: 'Massas' },
+    { value: 'extraSideDish', label: 'Acompanhamentos' },
+    { value: 'dessert', label: 'Sobremesas' },
+    { value: 'drink', label: 'Bebidas' }
   ];
 
   useEffect(() => {
