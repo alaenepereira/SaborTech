@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./CadastrarProduto.css";
 import EditIcon from '@mui/icons-material/Edit';
-import { productService } from '../../services/productService';
-import Header from "../../Components/Header/Index";
+import { productService } from '../../services/productService.js';
+
 import BackButton from "../../Components/Utils/BackButton";
 
 
