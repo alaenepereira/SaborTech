@@ -4,7 +4,8 @@ import "./CadastrarProduto.css";
 import BackButton from "../../Components/Utils/BackButton";
 
 import AddIcon from '@mui/icons-material/Add';
-import { productService } from '../../services/productService';
+import { productService } from '../../services/productService.js';
+
 
 export default function CadastrarProduto() {
 
@@ -204,7 +205,7 @@ export default function CadastrarProduto() {
               />
             </div>
 
-            {/* Estoque */}
+
             <div className="form-group">
               <label htmlFor="estoque">Estoque</label>
               <input
