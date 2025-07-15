@@ -29,6 +29,31 @@ const getProductById = async (id) => {
   }
 };
 
+/**
+ * (NOVO) Busca produtos filtrando por categoria.
+ * @param {string} category - A categoria para filtrar (ex: "coffee", "salad").
+ * @returns {Promise<Array>} Uma promessa que resolve para a lista de produtos da categoria.
+ */
+const getProductByCategory = async (category) => {
+  try {
+    // MockAPI permite filtrar com query params: /recurso?chave=valor
+    const response = await fetch(`${API_URL}?category=${category}`);
+    if (!response.ok) {
+      throw new Error(`Erro ao buscar produtos da categoria ${category}.`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Falha em getProductByCategory:', error);
+    return [];
+  }
+};
+
+/**
+ * Cria um novo produto na API.
+ * @param {Object} newProductData - Objeto com os dados do novo produto (sem o id).
+ * @returns {Promise<Object|null>} O produto recém-criado, incluindo o id gerado pela API.
+ */
+
 const createProduct = async (productData) => {
   try {
     const response = await fetch(API_URL, {
@@ -91,6 +116,7 @@ const clearCache = () => {
 export const productService = {
   getAllProducts,
   getProductById,
+  getProductByCategory,
   createProduct,
   updateProduct,
   deleteProduct,

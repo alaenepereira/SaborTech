@@ -3,6 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./CadastrarProduto.css";
 import EditIcon from '@mui/icons-material/Edit';
 import { productService } from '../../services/productService';
+import BackButton from "../../Components/Utils/BackButton";
 
 export default function EditarProduto() {
   const navigate = useNavigate();

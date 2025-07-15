@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import {
   Button,
@@ -67,7 +65,7 @@ function Menu() {
             {menuItems.map((item) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
                 <Card sx={{ maxWidth: 345, width: '100%', m: 'auto', display: 'flex', flexDirection: 'column', height: '100%' }} className='product-card'>
-                  <CardMedia
+                  <CardMedia className='product-card'
                     component="img"
                     sx={{ height: isSmallScreen ? 180 : 200, objectFit: 'cover' }}
                     image={item.image}
