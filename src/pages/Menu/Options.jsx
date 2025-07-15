@@ -14,7 +14,6 @@ import {
 import './Options.css';
 import Header from '../../Components/Header/Index';
 import { productService } from '../../services/productService.js';
-import BackButton from '../../Components/Utils/BackButton.jsx';
 
 function Menu() {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -39,27 +38,13 @@ function Menu() {
       }
     };
 
-    loadProducts();
-  }, []);
-
-  const getProductsByCategory = () => {
-    return produtos.filter(produto =>
-      produto.category?.toLowerCase() === activeCategory.toLowerCase()
-    );
-  };
-
-  const categories = [
-    { value: 'coffee', label: 'Cafés' },
-    { value: 'salad', label: 'Saladas' },
-    { value: 'mainDish', label: 'Pratos Principais' },
-    { value: 'massas', label: 'Massas' },
-    { value: 'extraSideDish', label: 'Acompanhamentos' },
-    { value: 'dessert', label: 'Sobremesas' },
-    { value: 'drink', label: 'Bebidas' }
-  ];
+    fetchItemsByCategory();
+  }, [activeCategory]);
 
 
-  if (loading) {
+
+
+  if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
         <CircularProgress />

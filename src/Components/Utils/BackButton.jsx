@@ -8,7 +8,7 @@ import './style.css';
 export default function BackButton() {
   const location = useLocation();
 
-  const showBackButton = ['/cardapio', '/add', '/estoque'].includes(location.pathname);
+  const showBackButton = location.pathname !== '/';
 
   const navigate = useNavigate();
 

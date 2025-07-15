@@ -3,7 +3,9 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./CadastrarProduto.css";
 import EditIcon from '@mui/icons-material/Edit';
 import { productService } from '../../services/productService';
+import Header from "../../Components/Header/Index";
 import BackButton from "../../Components/Utils/BackButton";
+
 
 export default function EditarProduto() {
   const navigate = useNavigate();
@@ -119,6 +121,7 @@ export default function EditarProduto() {
         <div className="cadastro-header">
           <h1 className="cadastro-title">
             <EditIcon sx={{ verticalAlign: 'middle', mr: 1 }} />
+            <BackButton />
             Editar Produto
           </h1>
         </div>
@@ -131,7 +134,7 @@ export default function EditarProduto() {
           )}
 
           <form onSubmit={handleSubmit} className="form-grid">
-            {/* Nome */}
+
             <div className="form-group">
               <label htmlFor="nome">Nome*</label>
               <input
@@ -146,7 +149,7 @@ export default function EditarProduto() {
               {errors.nome && <span className="error-message">{errors.nome}</span>}
             </div>
 
-            {/* Preço */}
+
             <div className="form-group">
               <label htmlFor="preco">Preço*</label>
               <input
@@ -163,7 +166,7 @@ export default function EditarProduto() {
               {errors.preco && <span className="error-message">{errors.preco}</span>}
             </div>
 
-            {/* Categoria */}
+
             <div className="form-group">
               <label htmlFor="categoria">Categoria*</label>
               <select
@@ -183,7 +186,7 @@ export default function EditarProduto() {
               {errors.categoria && <span className="error-message">{errors.categoria}</span>}
             </div>
 
-            {/* Descrição */}
+
             <div className="form-group full-width">
               <label htmlFor="descricao">Descrição*</label>
               <textarea
@@ -198,7 +201,7 @@ export default function EditarProduto() {
               {errors.descricao && <span className="error-message">{errors.descricao}</span>}
             </div>
 
-            {/* Imagem */}
+
             <div className="form-group full-width">
               <label htmlFor="imagem">URL da Imagem</label>
               <input
@@ -211,8 +214,9 @@ export default function EditarProduto() {
               />
             </div>
 
-            {/* Estoque */}
+
             <div className="form-group">
+
               <label htmlFor="estoque">Estoque</label>
               <input
                 id="estoque"
@@ -224,7 +228,7 @@ export default function EditarProduto() {
               />
             </div>
 
-            {/* Código de Barras */}
+
             <div className="form-group">
               <label htmlFor="codigoBarras">Código de Barras</label>
               <input
@@ -236,7 +240,7 @@ export default function EditarProduto() {
               />
             </div>
 
-            {/* Peso/Tamanho */}
+
             <div className="form-group">
               <label htmlFor="pesoTamanho">Peso/Tamanho</label>
               <input
@@ -249,7 +253,7 @@ export default function EditarProduto() {
               />
             </div>
 
-            {/* Desconto */}
+
             <div className="form-group">
               <label htmlFor="desconto">Desconto (%)</label>
               <input
@@ -263,7 +267,7 @@ export default function EditarProduto() {
               />
             </div>
 
-            {/* Palavras-chave */}
+
             <div className="form-group full-width">
               <label htmlFor="palavrasChave">Palavras-chave (separadas por vírgula)</label>
               <input
@@ -276,7 +280,6 @@ export default function EditarProduto() {
               />
             </div>
 
-            {/* Botão de Submit */}
             <div className="form-group full-width">
               <button
                 type="submit"

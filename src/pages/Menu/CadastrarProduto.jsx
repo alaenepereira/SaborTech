@@ -75,7 +75,7 @@ export default function CadastrarProduto() {
         pesoTamanho: formData.pesoTamanho,
         desconto: parseFloat(formData.desconto) || 0,
         palavrasChave: formData.palavrasChave,
-        
+
       };
 
       const createdProduct = await productService.createProduct(productData);
