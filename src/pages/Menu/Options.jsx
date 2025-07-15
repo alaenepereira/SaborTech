@@ -39,8 +39,33 @@ function Menu() {
       }
     };
 
-    fetchItemsByCategory();
-  }, [activeCategory]);
+    loadProducts();
+  }, []);
+
+  const getProductsByCategory = () => {
+    return produtos.filter(produto =>
+      produto.category?.toLowerCase() === activeCategory.toLowerCase()
+    );
+  };
+
+  const categories = [
+    { value: 'coffee', label: 'Cafés' },
+    { value: 'salad', label: 'Saladas' },
+    { value: 'mainDish', label: 'Pratos Principais' },
+    { value: 'massas', label: 'Massas' },
+    { value: 'extraSideDish', label: 'Acompanhamentos' },
+    { value: 'dessert', label: 'Sobremesas' },
+    { value: 'drink', label: 'Bebidas' }
+  ];
+
+
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <>
