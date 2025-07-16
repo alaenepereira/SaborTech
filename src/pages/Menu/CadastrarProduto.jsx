@@ -4,7 +4,7 @@ import "./CadastrarProduto.css";
 import BackButton from "../../Components/Utils/BackButton";
 
 import AddIcon from '@mui/icons-material/Add';
-import { productService } from '../../services/productService.js';
+import { productService } from '../../services';
 
 
 

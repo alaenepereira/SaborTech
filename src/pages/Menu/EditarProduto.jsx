@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./CadastrarProduto.css";
 import EditIcon from '@mui/icons-material/Edit';
-import { productService } from '../../services/productService.js';
+import { productService } from '../../services';
 
 
 import BackButton from "../../Components/Utils/BackButton";
