@@ -4,7 +4,7 @@ import "./CadastrarProduto.css";
 import BackButton from "../../Components/Utils/BackButton";
 
 import AddIcon from '@mui/icons-material/Add';
-import { productService } from '../../services';
+import { service } from '../../services';
 
 
 
@@ -80,10 +80,10 @@ export default function CadastrarProduto() {
 
       };
 
-      const createdProduct = await productService.createProduct(productData);
+      const createdProduct = await service.createProduct(productData);
 
       if (createdProduct) {
-        await productService.clearCache();
+        await service.clearCache();
         setMessage({
           text: 'Produto cadastrado com sucesso! Redirecionando...',
           type: 'success'

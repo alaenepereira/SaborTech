@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import './footer.css'
+import './style.css'
 
 export default function Copyright() {
   return (
