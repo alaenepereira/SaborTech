@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./CadastrarProduto.css";
 import EditIcon from '@mui/icons-material/Edit';
-import { productService } from '../../services';
+import { service } from '../../services';
 
 
 import BackButton from "../../Components/Utils/BackButton";
@@ -43,7 +43,7 @@ export default function EditarProduto() {
   useEffect(() => {
     const fetchProduto = async () => {
       try {
-        const produto = await productService.getProductById(id);
+        const produto = await service.getProductById(id);
         if (produto) {
           setFormData({
             nome: produto.name || '',
@@ -92,7 +92,7 @@ export default function EditarProduto() {
     setIsSubmitting(true);
 
     try {
-      await productService.updateProduct(id, {
+      await service.updateProduct(id, {
         name: formData.nome,
         price: parseFloat(formData.preco),
         category: formData.categoria,

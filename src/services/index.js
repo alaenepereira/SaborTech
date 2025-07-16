@@ -127,7 +127,7 @@ const clearCache = () => {
 };
 
 
-export const productService = {
+export const service = {
   getAllProducts,
   getProductById,
   getProductByCategory,

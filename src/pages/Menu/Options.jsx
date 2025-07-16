@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import './Options.css';
 import Header from '../../Components/Header/Index';
-import { productService } from '../../services';
+import { service } from '../../services';
 
 
 
@@ -31,7 +31,7 @@ function Menu() {
     const fetchItemsByCategory = async () => {
       try {
         setIsLoading(true);
-        const data = await productService.getProductByCategory(activeCategory);
+        const data = await service.getProductByCategory(activeCategory);
         setMenuItems(data);
       } catch (error) {
         console.error('Erro ao carregar itens:', error)

@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Header from '../../Components/Header/Index';
-import { productService } from '../../services';
+import { service } from '../../services';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -29,7 +29,7 @@ function ControleEstoque() {
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        const data = await productService.getAllProducts();
+        const data = await service.getAllProducts();
         setProdutos(data);
       } catch (error) {
         console.error('Erro ao carregar produtos:', error);
@@ -43,7 +43,7 @@ function ControleEstoque() {
 
   const handleUpdateStock = async (id, newStock) => {
     try {
-      await productService.updateProduct(id, { stockQuantity: parseInt(newStock) });
+      await service.updateProduct(id, { stockQuantity: parseInt(newStock) });
       const updatedProdutos = produtos.map(produto =>
         produto.id === id ? { ...produto, stockQuantity: parseInt(newStock) } : produto
       );
@@ -62,7 +62,7 @@ function ControleEstoque() {
   const handleDeleteProduct = async (id) => {
     if (window.confirm("Tem certeza que deseja excluir este produto?")) {
       try {
-        await productService.deleteProduct(id);
+        await service.deleteProduct(id);
         setProdutos(produtos.filter(prod => prod.id !== id));
       } catch (error) {
         console.error('Erro ao excluir produto:', error);
